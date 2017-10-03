@@ -1,0 +1,31 @@
+version: '2'
+services:
+    node-web:
+        container_name: node-web
+        ports:
+            - "8080:3000"
+            - "5858:5858"
+        volumes:
+            - .:/usr/src/app
+        networks: 
+            - app_net
+        image: node-image
+        command: npm start
+        environment:
+            - PORT=3000
+
+    mongo-mongo:
+        container_name: node-mongo
+        image: mongo:3.2
+        ports:
+            - "27017:27017"
+        volumes:
+            - mongo_db:/data/db
+        networks:
+            - app_net
+    
+networks:
+  app_net:
+    driver: bridge
+volumes:
+  mongo_db: {}
